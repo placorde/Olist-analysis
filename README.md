@@ -2,41 +2,57 @@
 
 ## 🧩 Problématique
 
-Comment mieux comprendre le comportement des clients d’Olist à travers l’analyse des données transactionnelles, logistiques et géographiques, afin d’identifier les facteurs influençant la satisfaction et la fidélisation ?
+**Comment segmenter efficacement les clients d’Olist selon leurs comportements d’achat, de localisation et de logistique, afin d’identifier des groupes homogènes pour améliorer la stratégie commerciale ?**
 
 ---
 
 ## 🔍 Méthodologie
 
-Le notebook suit une démarche en plusieurs étapes :
+### 1. 📥 Chargement & exploration
 
-### 1. 📥 Chargement et exploration des données
+* Importation de jeux de données clients, commandes, produits, géolocalisation
+* Vérification des valeurs manquantes et des doublons
 
-* Lecture de fichiers CSV (`customers`, `orders`, `geolocation`, etc.)
-* Aperçu des dimensions, types et valeurs manquantes
+### 2. 🔄 Prétraitement & fusion
 
-### 2. 🧬 Fusion et nettoyage
+* Jointures entre les bases (`order_id`, `customer_id`)
+* Normalisation des variables pour le clustering
+* Réduction de dimension via **PCA** (Analyse en Composantes Principales)
 
-* Jointures sur des identifiants (`customer_id`, `order_id`)
-* Suppression de doublons et gestion des valeurs nulles
+### 3. 📚 Clustering non supervisé
 
-### 3. 🗺️ Analyse géographique
+Plusieurs méthodes de **segmentation client** ont été testées :
 
-* Nettoyage des données de géolocalisation (cohérence des coordonnées)
-* Visualisation de la répartition des clients par État (via `plotly` ou `seaborn`)
+#### 📌 Algorithmes
 
-### 4. 📦 Analyse des commandes
+* **K-Means**
+* **DBSCAN**
+* **Agglomératif (Hierarchical Clustering)**
 
-* Délai entre achat, expédition et livraison
-* Écart entre date promise et date réelle
+#### 🧪 Évaluation comparative :
 
-### 5. 📈 Visualisations
+* 📉 **Elbow Plot** : pour déterminer le nombre optimal de clusters via la distorsion/inertie
+* 🧭 **Silhouette Score** : pour mesurer la qualité de séparation entre clusters
+* 🎯 **t-SNE** : pour visualiser les clusters en 2D tout en préservant les relations de proximité
+* 🔍 **Dendrogrammes** : pour explorer la structure hiérarchique
 
-* Répartition temporelle des commandes
-* Heatmaps géographiques
-* Histogrammes de fréquence et délais
-* 
+### 4. 📈 Visualisations
 
-## 📌 Résumé
+* Cartographie interactive des clusters clients par région
+* Graphiques de densité, scatter plots, heatmaps
+* Comparaison des clusters selon les délais de livraison, distance, fréquence d’achat, etc.
 
-Ce notebook fournit une base analytique solide pour étudier le parcours client chez Olist. L’intégration des différentes sources de données (commandes, localisation, délais) permet une compréhension fine des freins logistiques et des comportements régionaux. 
+---
+
+## 🧾 Résultats / Outputs clés
+
+* 📊 **Clusters interprétables** en fonction de la localisation, des habitudes d’achat et des délais
+* ✅ **Score de silhouette optimal** obtenu pour le modèle à *n=4* clusters (K-Means)
+* 🗺️ **t-SNE** permet une bonne séparation visuelle des groupes
+* 📍 Regroupement géographique de certains clusters montrant des disparités régionales
+
+---
+
+## 📌 Conclusion
+
+Le notebook démontre une segmentation client pertinente grâce à une approche rigoureuse de clustering non supervisé. L’usage croisé de **méthodes visuelles (t-SNE, elbow)** et **quantitatives (silhouette)** permet de valider la cohérence des segments. Ces insights sont directement mobilisables pour du ciblage marketing ou de la personnalisation des services logistiques.
